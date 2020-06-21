@@ -15,7 +15,7 @@
           </label>
         </div>
         <div class="form">
-          <input type="text" name="password" autocomplete="off" placeholder=" " />
+          <input type="password" name="password" autocomplete="off" placeholder=" " />
           <label for="password" class="label-name">
             <span class="content-name">Password</span>
           </label>
@@ -28,7 +28,7 @@
         <h2>Hello Friend</h2>
         <p>Enter your personal details and start journey with us</p>
         <button>Sign up</button>
-      </div> -->
+      </div>-->
     </div>
   </div>
 </template>
@@ -43,17 +43,36 @@ export default {
 
 <style scoped>
 .loginWrapper {
-  background-color: whitesmoke;
+  /* background-color: whitesmoke; */
+  background: url("../assets/background .jpg") no-repeat center;
+  background-size: cover;
+  opacity: 1;
+  position: relative;
   height: 100vh;
   padding: 0;
+  z-index: 1;
   margin: 0;
   display: flex;
   justify-content: center;
   align-items: center;
 }
+
+.loginWrapper::before {
+  content: "";
+  display: block;
+  position: absolute;
+  z-index: -1;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  /* background-color: rgba(255,255,255,0.9); */
+  background-color: rgba(78, 140, 134, 0.83);
+  filter: blur(0.5px);
+}
 .loginWrapperCenter {
   background: aquamarine;
-  width: 41vw;
+  width: 27vw;
   height: 65vh;
   display: flex;
   font-family: "Trebuchet MS";
@@ -72,11 +91,11 @@ export default {
 }
 .signInBySocialMedia {
   width: 35%;
-    height: 29%;
-    display: flex;
-    justify-content: space-between;
+  height: 29%;
+  display: flex;
+  justify-content: space-between;
 }
-.signInBySocialMedia>img {
+.signInBySocialMedia > img {
   width: 100%;
   height: 100%;
 }
@@ -84,30 +103,6 @@ h1 {
   margin: 0;
   padding: 3rem;
   font-size: 3rem;
-}
-.signUp {
-  margin: 0;
-  padding: 0;
-  /* background: white; */
-  width: 35%;
-  color: white;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  /* justify-content: center; */
-  align-items: center;
-}
-.signUp > p {
-  font-size: 1rem;
-  padding: 0 1rem;
-  font-weight: bold;
-}
-
-h2 {
-  margin: 0;
-  padding: 4rem 2rem 1rem 2rem;
-  font-size: 2rem;
-  font-weight: bold;
 }
 .login {
   display: flex;
@@ -189,6 +184,9 @@ a {
   margin-bottom: 4%;
   margin-top: 4%;
 }
+a:hover {
+  color: #129287;
+}
 button {
   text-decoration: none;
   outline: none;
@@ -224,5 +222,88 @@ button:hover {
 button:hover:before {
   left: 150px;
   transition: 0.5s ease-in-out;
+}
+
+@media (min-width: 1200px) {
+  .loginWrapperCenter[data-v-5faf54d0] {
+    background: aquamarine;
+    width: 27vw;
+    height: 70vh;
+    display: flex;
+    font-family: "Trebuchet MS";
+  }
+  h1 {
+    margin: 0;
+    padding: 2rem;
+    font-size: 2rem;
+  }
+}
+
+/* Landscape tablets and medium desktops */
+@media (min-width: 992px) and (max-width: 1199px) {
+  .loginWrapperCenter {
+    background: aquamarine;
+    width: 39vw;
+    height: 100vh;
+    display: flex;
+    font-family: "Trebuchet MS";
+  }
+  .form input {
+    font-size: 15px;
+    padding-top: 0%;
+  }
+}
+
+/* Portrait tablets and small desktops */
+@media (min-width: 768px) and (max-width: 991px) {
+  h1 {
+    margin: 0;
+    padding: 0;
+    font-size: 2rem;
+  }
+  .loginWrapperCenter {
+    width: 39vw;
+    height: 74vh;
+  }
+}
+
+/* Landscape phones and portrait tablets */
+@media (max-width: 767px) {
+  .loginWrapperCenter {
+    width: 59vw;
+    height: 69vh;
+   
+  }
+}
+
+/* Portrait phones and smaller */
+@media (max-width: 480px) {
+  .loginWrapperCenter {
+    width: 97vw;
+    height: 59vh;
+  }
+}
+
+/* Iphone 5 */
+@media (max-width: 320px) {
+  .loginWrapperCenter {
+    width: 99vw;
+    height: 102vh;
+   
+  }
+}
+
+@media (max-height: 480px) {
+  .loginWrapperCenter {
+    background: aquamarine;
+    width: 63vw;
+    height: 96vh;
+    
+  }
+  h1 {
+    margin: 0;
+    padding: 0;
+    font-size: 2rem;
+  }
 }
 </style>
