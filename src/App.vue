@@ -1,22 +1,34 @@
 <template>
   <div id="app">
-    <LoginPage/>
+    <LoginPage v-if="this.auth===false" />
+    <MainPage v-else-if="this.auth===true" />
   </div>
 </template>
 
 <script>
-import LoginPage from './components/LoginPage.vue'
-
+import LoginPage from "./components/LoginPage.vue";
+import MainPage from "./components/MainPage.vue";
 
 export default {
-  name: 'App',
+  name: "App",
+  data() {
+    return {
+      auth: true
+    };
+  },
   components: {
-    LoginPage
+    LoginPage,
+    MainPage
   }
-}
+};
 </script>
 
 <style>
+body {
+  margin: 0;
+  padding: 0;
+  /* background-color: whitesmoke; */
+}
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -24,9 +36,30 @@ export default {
   text-align: center;
   color: #2c3e50;
   /* margin-top: 60px; */
-}
-body{
-  margin:0;
+  background: url("./assets/background .jpg") no-repeat center;
+  background-size: cover;
+  opacity: 1;
+  position: relative;
+  height: 100vh;
   padding: 0;
+  z-index: 1;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#app::before {
+  content: "";
+  display: block;
+  position: absolute;
+  z-index: -1;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  /* background-color: rgba(255,255,255,0.9); */
+  background-color: rgba(78, 140, 134, 0.83);
+  filter: blur(0.5px);
 }
 </style>

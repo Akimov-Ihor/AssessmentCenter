@@ -9,20 +9,25 @@
         <span class="adviceLoginPage">Ensure your email for registration</span>
 
         <div class="form">
-          <input type="text" name="name" autocomplete="off" placeholder=" " />
+          <input type="text" name="name" autocomplete="off" placeholder=" " v-model="login" />
           <label for="name" class="label-name">
             <span class="content-name">Email</span>
           </label>
         </div>
         <div class="form">
-          <input type="password" name="password" autocomplete="off" placeholder=" " />
+          <input
+            type="password"
+            name="password"
+            autocomplete="off"
+            placeholder=" "
+            v-model="password"
+          />
           <label for="password" class="label-name">
             <span class="content-name">Password</span>
           </label>
         </div>
-
         <a href="#">Forgot your password?</a>
-        <button>Sign In</button>
+       <button v-on:click="onSubmit">Sign In</button> 
       </div>
       <!-- <div class="signUp">
         <h2>Hello Friend</h2>
@@ -36,16 +41,51 @@
 
 
 <script>
+import axios from "axios";
+
 export default {
-  components: {}
+  data() {
+    return {
+      login: "",
+      password: "",
+      token:'',
+      auth:false
+    };
+  },
+  methods: {
+    async onSubmit() {
+    const response =  await axios
+         .post(
+          "http://ec2-3-22-241-132.us-east-2.compute.amazonaws.com/api/token/",
+          { sAMAccountName: this.login, password: this.password }
+        )
+      this.password = "";
+      this.login = "";
+          this.token=response.data.access
+          console.log(this.token)
+       await axios
+          .get(
+          "http://ec2-3-22-241-132.us-east-2.compute.amazonaws.com/user/users",
+          { headers: { 'Authorization': `Bearer ${this.token}` } })
+        .then(response=>{
+          if(response.status==200){
+          this.auth=!this.auth
+          }
+        })
+        .catch(e => {
+          console.log("gg", e);
+        });
+        console.log(this.auth)
+    }
+  }
 };
 </script>
 
 <style scoped>
 .loginWrapper {
   /* background-color: whitesmoke; */
-  background: url("../assets/background .jpg") no-repeat center;
-  background-size: cover;
+  /* background: url("../assets/background .jpg") no-repeat center;
+  background-size: cover; */
   opacity: 1;
   position: relative;
   height: 100vh;
@@ -67,7 +107,7 @@ export default {
   top: 0;
   left: 0;
   /* background-color: rgba(255,255,255,0.9); */
-  background-color: rgba(78, 140, 134, 0.83);
+  /* background-color: rgba(78, 140, 134, 0.83); */
   filter: blur(0.5px);
 }
 .loginWrapperCenter {
@@ -272,7 +312,6 @@ button:hover:before {
   .loginWrapperCenter {
     width: 59vw;
     height: 69vh;
-   
   }
 }
 
@@ -289,7 +328,6 @@ button:hover:before {
   .loginWrapperCenter {
     width: 99vw;
     height: 102vh;
-   
   }
 }
 
@@ -298,7 +336,6 @@ button:hover:before {
     background: aquamarine;
     width: 63vw;
     height: 96vh;
-    
   }
   h1 {
     margin: 0;
