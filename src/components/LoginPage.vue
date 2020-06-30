@@ -27,7 +27,7 @@
           </label>
         </div>
         <a href="#">Forgot your password?</a>
-       <button v-on:click="onSubmit">Sign In</button> 
+        <button v-on:click="onSubmit">Sign In</button>
       </div>
       <!-- <div class="signUp">
         <h2>Hello Friend</h2>
@@ -48,35 +48,61 @@ export default {
     return {
       login: "",
       password: "",
-      token:'',
-      auth:false
+      token: ""
     };
   },
   methods: {
+
     async onSubmit() {
-    const response =  await axios
-         .post(
-          "http://ec2-3-22-241-132.us-east-2.compute.amazonaws.com/api/token/",
-          { sAMAccountName: this.login, password: this.password }
-        )
-      this.password = "";
-      this.login = "";
-          this.token=response.data.access
-          console.log(this.token)
-       await axios
-          .get(
+      const response = await axios.post(
+        "http://ec2-3-22-241-132.us-east-2.compute.amazonaws.com/api/token/",
+        { sAMAccountName: this.login, password: this.password }
+      );
+      console.log(response.data.access)
+      localStorage.setItem('access',response.data.access)
+      await axios
+        .get(
           "http://ec2-3-22-241-132.us-east-2.compute.amazonaws.com/user/users",
-          { headers: { 'Authorization': `Bearer ${this.token}` } })
-        .then(response=>{
-          if(response.status==200){
-          this.auth=!this.auth
+          { headers: { Authorization: `Bearer ${localStorage.getItem('access')}` } }
+        )
+        .then(response => {
+          if (response.status == 200) {
+            this.$emit("changeIsAuth");
           }
         })
         .catch(e => {
           console.log("gg", e);
         });
-        console.log(this.auth)
+      console.log(this.auth);
+       this.password = "";
+      this.login = "";
     }
+    // async onSubmit() {
+    //   const response = await axios.post(
+    //     "http://ec2-3-22-241-132.us-east-2.compute.amazonaws.com/api/token/",
+    //     { sAMAccountName: this.login, password: this.password }
+    //   );
+    //   this.password = "";
+    //   this.login = "";
+    //   this.token = response.data.access;
+    //   console.log(this.token);
+    //   await axios
+    //     .get(
+    //       "http://ec2-3-22-241-132.us-east-2.compute.amazonaws.com/user/users",
+    //       { headers: { Authorization: `Bearer ${this.token}` } }
+    //     )
+    //     .then(response => {
+    //       if (response.status == 200) {
+    //         this.$emit("changeIsAuth");
+    //       }
+    //     })
+    //     .catch(e => {
+    //       console.log("gg", e);
+    //       this.password = "";
+    //       this.login = "";
+    //     });
+    //   console.log(this.auth);
+    // }
   }
 };
 </script>

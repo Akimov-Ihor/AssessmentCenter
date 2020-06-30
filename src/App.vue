@@ -1,11 +1,12 @@
 <template>
   <div id="app">
-    <LoginPage v-if="this.auth===false" />
+    <LoginPage v-if="this.auth===false" @changeIsAuth="isAuth" />
     <MainPage v-else-if="this.auth===true" />
   </div>
 </template>
 
 <script>
+debugger
 import LoginPage from "./components/LoginPage.vue";
 import MainPage from "./components/MainPage.vue";
 
@@ -13,8 +14,14 @@ export default {
   name: "App",
   data() {
     return {
-      auth: true
+      auth: false
     };
+  },
+  methods:{
+   isAuth:function ChangeMainAuth(){
+      return this.auth=!this.auth
+   }
+  
   },
   components: {
     LoginPage,
